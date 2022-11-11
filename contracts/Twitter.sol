@@ -69,12 +69,28 @@ contract Twitter {
         for (uint256 i = 0; i < counter; i++) {
             if (Tweets[i].isDeleted == false) {
                 temporary[countTweets] = Tweets[i];
+                countTweets++;
             }
         }
-        Tweets[] memory result = new tweet[](countTweets);
+        tweet[] memory result = new tweet[](countTweets);
         for (uint256 i = 0; i < counter; i++) {
             result[i] = temporary[i];
         }
         return result;
+    }
+
+    function getMyTweets() external view returns (tweet[] memory) {
+        tweet[] memory temporary = new tweet[](counter);
+        uint256 countMyTweets = 0;
+        for (i = 0; i < counter; i++) {
+            if (Tweets[i].tweeter == msg.sender) {
+                temporary[countMyTweets] = Tweets[i];
+                countMyTweets++;
+            }
+        }
+        tweet[] memory result = new tweet[](countMyTweets);
+        for (i = 0; i < counter; i++) {
+            result[i] = temporary[i];
+        }
     }
 }
