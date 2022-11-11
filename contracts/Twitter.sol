@@ -62,4 +62,19 @@ contract Twitter {
         counter++;
         payable(owner).transform(msg.value);
     }
+
+    function getAllTweets() public view returns (tweet[] memory) {
+        tweet[] memory temporary = new tweet[](counter);
+        uint256 countTweets = 0;
+        for (uint256 i = 0; i < counter; i++) {
+            if (Tweets[i].isDeleted == false) {
+                temporary[countTweets] = Tweets[i];
+            }
+        }
+        Tweets[] memory result = new tweet[](countTweets);
+        for (uint256 i = 0; i < counter; i++) {
+            result[i] = temporary[i];
+        }
+        return result;
+    }
 }
