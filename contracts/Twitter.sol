@@ -120,4 +120,21 @@ contract Twitter {
         Tweets[tweetId].isDeleted = isDeleted;
         emit TweetDeleted(tweetId, isDeleted);
     }
+
+    function updateUserDetails(
+        string memory newName,
+        string memory newBio,
+        string memory newProfileImg,
+        string memory newProfileBanner
+    ) {
+        user storage userData = Users[msg.sender];
+        userData.name = newName;
+        userData.bio = newBio;
+        userData.profileBanner = newProfileImg;
+        userData.profileBanner = newProfileBanner;
+    }
+
+    function getUser(address userAdress) public view returns (user memory) {
+        return Users[userAdress];
+    }
 }
