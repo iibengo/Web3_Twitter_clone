@@ -6,7 +6,7 @@ dotenv.config({ path: __dirname + "/.env" });
 const config: HardhatUserConfig = {
   solidity: "0.8.17",
   networks: {
-    goerli: {
+    mumbai: {
       url: process.env.ALCHEMY_URL_POLY_TEST,
       accounts: [process.env.WALLET_PRIVATE_KEY as string],
     },
