@@ -83,7 +83,9 @@ contract Twitter {
         tweet[] memory temporary = new tweet[](counter);
         uint256 countMyTweets = 0;
         for (i = 0; i < counter; i++) {
-            if (Tweets[i].tweeter == msg.sender) {
+            if (
+                Tweets[i].tweeter == msg.sender && Tweets[i].isDeleted == false
+            ) {
                 temporary[countMyTweets] = Tweets[i];
                 countMyTweets++;
             }
@@ -92,5 +94,6 @@ contract Twitter {
         for (i = 0; i < counter; i++) {
             result[i] = temporary[i];
         }
+        return result;
     }
 }
