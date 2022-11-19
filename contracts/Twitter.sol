@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
+import "hardhat/console.sol";
 
 contract Twitter {
     address public owner;
@@ -43,7 +44,7 @@ contract Twitter {
         public
         payable
     {
-        require(msg.value == (0.01 ether), "Please submit 0.01 MATIC");
+        require(msg.value == (1 ether), "Please submit 1 MATIC");
         tweet storage newTweet = Tweets[counter];
         newTweet.tweetText = tweetText;
         newTweet.tweetImg = tweetImg;
@@ -52,7 +53,7 @@ contract Twitter {
         newTweet.isDeleted = false;
         newTweet.timestamp = block.timestamp;
         emit TweetCreated(
-            meg.sender,
+            msg.sender,
             counter,
             tweetText,
             tweetImg,
@@ -60,7 +61,7 @@ contract Twitter {
             block.timestamp
         );
         counter++;
-        payable(owner).transform(msg.value);
+        payable(owner).transfer(msg.value);
     }
 
     function getAllTweets() public view returns (tweet[] memory) {
@@ -82,7 +83,7 @@ contract Twitter {
     function getMyTweets() external view returns (tweet[] memory) {
         tweet[] memory temporary = new tweet[](counter);
         uint256 countMyTweets = 0;
-        for (i = 0; i < counter; i++) {
+        for (uint256 i = 0; i < counter; i++) {
             if (
                 Tweets[i].tweeter == msg.sender && Tweets[i].isDeleted == false
             ) {
@@ -91,7 +92,7 @@ contract Twitter {
             }
         }
         tweet[] memory result = new tweet[](countMyTweets);
-        for (i = 0; i < counter; i++) {
+        for (uint256 i = 0; i < counter; i++) {
             result[i] = temporary[i];
         }
         return result;
@@ -126,7 +127,7 @@ contract Twitter {
         string memory newBio,
         string memory newProfileImg,
         string memory newProfileBanner
-    ) {
+    ) public {
         user storage userData = Users[msg.sender];
         userData.name = newName;
         userData.bio = newBio;
