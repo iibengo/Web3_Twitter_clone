@@ -1,0 +1,40 @@
+.page {
+  display: flex;
+  justify-content: space-between;
+}
+.sideBar {
+  position: fixed;
+  top: 0px;
+  width: 20%;
+  border-right: 1px solid rgb(63, 63, 63);
+  color: white;
+  height: 100vh;
+  position: -webkit-sticky;
+}
+.rightBar {
+  position: fixed;
+  right: 0;
+  width: 30%;
+  border-left: 1px solid rgb(63, 63, 63);
+  color: white;
+  height: 100vh;
+  top: 0;
+}
+.mainWindow {
+  width: 0;
+  margin: 0 auto;
+}
+a:-webkit-any-link {
+  cursor: pointer;
+  text-decoration: none !important;
+  height: 0px !important;
+}
+
+.loginPage {
+  height: 100vh;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+}
