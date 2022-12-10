@@ -44,18 +44,16 @@ export const Rightbar = () => {
         ></Input>
         <div className="trends">
           Trending
-          {trends.map((trend) => {
+          {trends.map((trend, i) => {
             return (
-              <>
-                <div
-                  className="trend"
-                  key={trend.text}
-                  onClick={() => window.open(trend.link)}
-                >
-                  <img src={trend.img} className="trendImg" alt={trend.text} />
-                  <div className="trendText">{trend.text}</div>
-                </div>
-              </>
+              <div
+                className="trend"
+                key={i}
+                onClick={() => window.open(trend.link)}
+              >
+                <img src={trend.img} className="trendImg" alt={trend.text} />
+                <div className="trendText">{trend.text}</div>
+              </div>
             );
           })}
         </div>

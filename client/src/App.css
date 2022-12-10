@@ -21,8 +21,9 @@
   top: 0;
 }
 .mainWindow {
-  width: 0;
+  width: 50%;
   margin: 0 auto;
+  margin-right: 30%;
 }
 a:-webkit-any-link {
   cursor: pointer;
