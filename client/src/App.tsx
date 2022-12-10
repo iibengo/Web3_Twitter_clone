@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import Home from "./pages/Home";
 import Profile from "./pages/Profilee";
@@ -17,7 +16,7 @@ function App() {
             <Route path="/settings" element={<Settings />} />
           </Routes>
         </div>
-        <div className="rightBar"></div>
+        <div className="rightBar">rightbar</div>
       </div>
     </>
   );
