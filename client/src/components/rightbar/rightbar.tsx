@@ -1,8 +1,5 @@
 import React from "react";
 import "./rightbar.css";
-import { Twitter, Cube, User, Cog } from "@web3uikit/icons";
-import { Link } from "react-router-dom";
-
 import hardhat from "../../images/hardhat.png";
 import solidity from "../../images/solidity.png";
 import react from "../../images/react.png";
