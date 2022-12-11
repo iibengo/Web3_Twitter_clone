@@ -1,6 +1,7 @@
 import { Avatar } from "@web3uikit/core";
 import { Image } from "@web3uikit/icons";
 import React, { useRef, useState } from "react";
+import { TweetInFeed } from "../components/tweet-feed";
 import { defaultImages } from "../utils/default-images";
 import "./Home.css";
 
@@ -53,9 +54,7 @@ const Home = () => {
             <div className="tweet">Tweet</div>
           </div>
         </div>
-        {
-          // Feed section
-        }
+        <TweetInFeed profile={false} />
       </div>
     </>
   );
