@@ -1,8 +1,8 @@
 import React from "react";
 import "./App.css";
-import Home from "./pages/Home";
-import Profile from "./pages/Profilee";
-import Settings from "./pages/Settings";
+import { Home } from "./pages/";
+import { Profile } from "./pages/profile";
+import { Settings } from "./pages/settings";
 import { Route, Routes } from "react-router-dom";
 import { Rightbar, Sidebar } from "./components/";
 function App() {
