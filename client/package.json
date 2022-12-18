@@ -12,6 +12,8 @@
     "@types/react-dom": "^18.0.9",
     "@web3uikit/core": "^0.2.19",
     "@web3uikit/icons": "^0.2.19",
+    "cartoon-avatar": "^1.0.2",
+    "ethers": "^5.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.3",
