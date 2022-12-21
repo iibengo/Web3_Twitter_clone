@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Home } from "./pages/";
 import { Profile } from "./pages/profile";
@@ -37,6 +37,21 @@ function App() {
       position: "topR",
     });
   };
+
+  useEffect(() => {
+    if (!provider) {
+      window.alert("No Metamask Intalled");
+      window.location.replace("https://metamask.io");
+    }
+
+    // connectWallet();
+    const handleAccountChanged = (accounts: {}) => {};
+    const handleChainChanged = (accounts: {}) => {};
+    const handleDisconnect = (accounts: {}) => {};
+    provider.on("accountChanged", handleAccountChanged);
+    provider.on("chainChanged", handleChainChanged);
+    provider.on("disconnect", handleDisconnect);
+  }, []);
 
   const connectWallet = async () => {
     const web3Modal = new Web3Modal();
@@ -91,23 +106,75 @@ function App() {
         TwitterAbi.abi,
         signer
       );
-      const getUserDetails = await contract.getUserDetail(signerAddress);
-      if (getUserDetails("profileImage")) {
+      const getUserDetails = await contract.getUser(signerAddress);
+      if (getUserDetails["profileBanner"]) {
         //if user exists
+        console.log("if1", getUserDetails);
+        window.localStorage.setItem(
+          "activeAccount",
+          JSON.stringify(signerAddress)
+        );
+        window.localStorage.setItem(
+          "userName",
+          JSON.stringify(getUserDetails["name"])
+        );
+        window.localStorage.setItem(
+          "userBio",
+          JSON.stringify(getUserDetails["bio"])
+        );
+        window.localStorage.setItem(
+          "userImage",
+          JSON.stringify(getUserDetails["profileImage"])
+        );
+        window.localStorage.setItem(
+          "userBanner",
+          JSON.stringify(getUserDetails["profileBanner"])
+        );
       } else {
         //first time user
         // get random avatar and update the contrat
+
+        setLoading(true);
+        let avatar = toonAvatar.generate_avatar();
+        let defaultBanner =
+          "https://media.istockphoto.com/id/1308480157/es/vector/simple-ilustración-de-arte-de-p%C3%ADxel-plano-de-gatito-lindo-dibujos-animados-sentado-en-una.jpg?s=612x612&w=is&k=20&c=HTpWkvf2QLTk94eUqFxcx2EYZJfrCT5QCgmeQJV3xoE=";
+        window.localStorage.setItem(
+          "activeAccount",
+          JSON.stringify(signerAddress)
+        );
+        window.localStorage.setItem("userName", JSON.stringify(""));
+        window.localStorage.setItem("userBio", JSON.stringify(""));
+        window.localStorage.setItem("userImage", JSON.stringify(avatar));
+        window.localStorage.setItem(
+          "userBanner",
+          JSON.stringify(defaultBanner)
+        );
+        try {
+          const transaction = await contract.updateUserDetails(
+            "",
+            "",
+            avatar,
+            defaultBanner
+          );
+          await transaction.wait();
+        } catch (error) {
+          console.log("Error", error);
+          notification({
+            type: "warning",
+            message: "Get test matic from polygon faucet",
+            title: "Require minimom 0.1 MATIC",
+            position: "topR",
+          });
+          setLoading(false);
+          return;
+        }
       }
 
       setProver(provider);
       setIsAuthenticated(true);
     }
   };
-  const loginHandler = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    return event;
-  };
+
   return (
     <>
       {isAuthenticated ? (
@@ -129,13 +196,17 @@ function App() {
       ) : (
         <div className="loginPage">
           <Twitter fill="#ffffff" fontSize={80} />
-          <Button
-            onClick={loginHandler}
-            size="xl"
-            text="Login with metamas"
-            theme="primary"
-            icon={<Metamask />}
-          />
+          {loading ? (
+            <Loading size={50} spinnerColor="green" />
+          ) : (
+            <Button
+              onClick={connectWallet}
+              size="xl"
+              text="Login with metamas"
+              theme="primary"
+              icon={<Metamask />}
+            />
+          )}
         </div>
       )}
     </>

@@ -131,7 +131,7 @@ contract Twitter {
         user storage userData = Users[msg.sender];
         userData.name = newName;
         userData.bio = newBio;
-        userData.profileBanner = newProfileImg;
+        userData.profileImg = newProfileImg;
         userData.profileBanner = newProfileBanner;
     }
 
