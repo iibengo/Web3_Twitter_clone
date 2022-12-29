@@ -39,7 +39,6 @@ function App() {
   };
 
   useEffect(() => {
-    console.log("useeffecr");
     if (!provider) {
       window.alert("No Metamask Intalled");
       window.location.replace("https://metamask.io");
@@ -60,7 +59,6 @@ function App() {
       }
     };
     const handleChainChanged = (chainId: string) => {
-      console.log("chain");
       if (chainId !== "0x13881") {
         warningNotification();
       }
@@ -79,7 +77,6 @@ function App() {
     const getNetwork = await provider.getNetwork();
     const polygonChainId = 80001;
     if (getNetwork.chainId !== polygonChainId) {
-      console.log("entra coonect");
       warningNotification();
       try {
         if (provider.provider.request) {
