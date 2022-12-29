@@ -15,7 +15,7 @@ var toonAvatar = require("cartoon-avatar");
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [provider, setProver] = useState(
+  const [provider, setProvider] = useState(
     window.ethereum as ethers.providers.Web3Provider
   );
   const notification = useNotification();
@@ -39,14 +39,33 @@ function App() {
   };
 
   useEffect(() => {
+    console.log("useeffecr");
     if (!provider) {
       window.alert("No Metamask Intalled");
       window.location.replace("https://metamask.io");
     }
 
-    // connectWallet();
-    const handleAccountChanged = (accounts: {}) => {};
-    const handleChainChanged = (accounts: {}) => {};
+    connectWallet();
+    const handleAccountChanged = async (accounts: [string]) => {
+      const { chainId } = await provider.getNetwork();
+      if (chainId.toString() === "0x13881") {
+        infoNotification(accounts[0]);
+      }
+      if (
+        JSON.parse(localStorage.getItem("activeAccount") as string) !== null
+      ) {
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
+      }
+    };
+    const handleChainChanged = (chainId: string) => {
+      console.log("chain");
+      if (chainId !== "0x13881") {
+        warningNotification();
+      }
+      window.location.reload();
+    };
     const handleDisconnect = (accounts: {}) => {};
     provider.on("accountChanged", handleAccountChanged);
     provider.on("chainChanged", handleChainChanged);
@@ -60,6 +79,7 @@ function App() {
     const getNetwork = await provider.getNetwork();
     const polygonChainId = 80001;
     if (getNetwork.chainId !== polygonChainId) {
+      console.log("entra coonect");
       warningNotification();
       try {
         if (provider.provider.request) {
@@ -168,7 +188,7 @@ function App() {
         }
       }
 
-      setProver(provider);
+      setProvider(provider);
       setIsAuthenticated(true);
     }
   };
