@@ -109,7 +109,6 @@ function App() {
       const getUserDetails = await contract.getUser(signerAddress);
       if (getUserDetails["profileBanner"]) {
         //if user exists
-        console.log("if1", getUserDetails);
         window.localStorage.setItem(
           "activeAccount",
           JSON.stringify(signerAddress)
@@ -133,7 +132,6 @@ function App() {
       } else {
         //first time user
         // get random avatar and update the contrat
-
         setLoading(true);
         let avatar = toonAvatar.generate_avatar();
         let defaultBanner =
@@ -162,7 +160,7 @@ function App() {
           notification({
             type: "warning",
             message: "Get test matic from polygon faucet",
-            title: "Require minimom 0.1 MATIC",
+            title: "Require minimum 0.1 MATIC",
             position: "topR",
           });
           setLoading(false);
@@ -202,7 +200,7 @@ function App() {
             <Button
               onClick={connectWallet}
               size="xl"
-              text="Login with metamas"
+              text="Login with metamask"
               theme="primary"
               icon={<Metamask />}
             />
